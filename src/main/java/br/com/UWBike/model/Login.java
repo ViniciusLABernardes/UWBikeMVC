@@ -1,0 +1,33 @@
+package br.com.UWBike.model;
+
+import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
+import java.io.Serializable;
+
+@Entity
+@Table(name = "TB_LOGIN")
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Login implements Serializable {
+
+    @Id
+    @Column(name = "ID_FUNCIONARIO")
+    private Long idFuncionario;
+
+    @OneToOne
+    @MapsId
+    @JoinColumn(name = "id_funcionario", referencedColumnName = "id_funcionario")
+    private Funcionario funcionario;
+
+    @Column(name = "login", length = 50, nullable = false, unique = true)
+    private String login;
+
+    @Column(name = "senha", length = 50, nullable = false)
+    private String senha;
+}

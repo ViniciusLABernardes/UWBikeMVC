@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Catálogo de Itens</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+<header class="header">
+    <h1>Itens</h1>
+    <a th:href="@{/novo}" class="btn-primary">+ Nova moto</a>
+</header>
+
+<main class="card">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Classificação</th>
+            <th class="num">Tamanho</th>
+            <th class="num">Preço (R$)</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(itens)}">
+            <td colspan="6" class="muted">Sem dados ainda. Deseja cadastrar um item?</td>
+        </tr>
+        <tr th:each="it : ${itens}">
+            <td th:text="${it.nomeItem}">Nome</td>
+            <td th:text="${it.tipoItem}">Tipo</td>
+            <td th:text="${it.classificacaoItem}">Classe</td>
+            <td class="num" th:text="${#numbers.formatDecimal(it.tamanhoItem,1,2)}">0.00</td>
+            <td class="num" th:text="${#numbers.formatDecimal(it.precoItem,1,2)}">0.00</td>
+            <td class="actions">
+                <a th:href="@{'/itens/' + ${it.idItem} + '/editar'}" class="btn-outline">Editar</a>
+                <form th:action="@{'/itens/' + ${it.idItem} + '/excluir'}" method="post"
+                      onsubmit="return confirm('Confirmar exclusão?');" style="display:inline;">
+                    <button type="submit" class="btn-danger">Excluir</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer class="footer">
+    <small class="muted">Ferramentas.com</small>
+</footer>
+</body>
+</html>

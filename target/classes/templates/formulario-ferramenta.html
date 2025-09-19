@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <title>Novo Item</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+<header class="header">
+    <h1>Novo Item</h1>
+    <a th:href="@{/}" class="btn-outline">← Voltar</a>
+</header>
+
+<main class="card form">
+    <form th:action="@{/}" th:object="${item}" method="post">
+        <div class="field">
+            <label for="nomeItem">Nome</label>
+            <input id="nomeItem" th:field="*{nomeItem}" type="text" placeholder="Ex.: Chave de Fenda" />
+            <div class="error" th:if="${#fields.hasErrors('nomeItem')}" th:errors="*{nomeItem}">Erro</div>
+        </div>
+
+        <div class="field">
+            <label for="tipoItem">Tipo</label>
+            <input id="tipoItem" th:field="*{tipoItem}" type="text" placeholder="Ferramenta, Acessório..." />
+            <div class="error" th:if="${#fields.hasErrors('tipoItem')}" th:errors="*{tipoItem}">Erro</div>
+        </div>
+
+        <div class="field">
+            <label for="classificacaoItem">Classificação</label>
+            <input id="classificacaoItem" th:field="*{classificacaoItem}" type="text" placeholder="Premium, Standard..." />
+            <div class="error" th:if="${#fields.hasErrors('classificacaoItem')}" th:errors="*{classificacaoItem}">Erro</div>
+        </div>
+
+        <div class="cols">
+            <div class="field">
+                <label for="tamanhoItem">Tamanho</label>
+                <input id="tamanhoItem" th:field="*{tamanhoItem}" type="number" step="0.01" placeholder="1.50" />
+                <div class="error" th:if="${#fields.hasErrors('tamanhoItem')}" th:errors="*{tamanhoItem}">Erro</div>
+            </div>
+
+            <div class="field">
+                <label for="precoItem">Preço (R$)</label>
+                <input id="precoItem" th:field="*{precoItem}" type="number" step="0.01" placeholder="99.90" />
+                <div class="error" th:if="${#fields.hasErrors('precoItem')}" th:errors="*{precoItem}">Erro</div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button type="submit" class="btn-primary">Salvar</button>
+            <a th:href="@{/}" class="btn-outline">Cancelar</a>
+        </div>
+    </form>
+</main>
+</body>
+</html>
