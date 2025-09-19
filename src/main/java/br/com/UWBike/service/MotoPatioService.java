@@ -94,14 +94,14 @@ public class MotoPatioService {
         double E = 2 * (y3 - y2);
         double F = r2 * r2 - r3 * r3 - x2 * x2 + x3 * x3 - y2 * y2 + y3 * y3;
 
-        double denominator = A * E - B * D;
+        double denominador = A * E - B * D;
 
-        if (denominator == 0) {
+        if (denominador == 0) {
             throw new RuntimeException("As âncoras estão mal posicionadas para trilateração.");
         }
 
-        double x = (C * E - F * B) / denominator;
-        double y = (A * F - C * D) / denominator;
+        double x = (C * E - F * B) / denominador;
+        double y = (A * F - C * D) / denominador;
 
         moto.setPosicaoX(x);
         moto.setPosicaoY(y);

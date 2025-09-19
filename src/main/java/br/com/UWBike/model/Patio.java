@@ -62,6 +62,18 @@ public class Patio {
     @JsonManagedReference("ancoraRef")
     private List<Ancora> ancoras;
 
+    @ManyToMany(mappedBy = "patios")
+    @JsonManagedReference("funcioRef")
+    private List<Funcionario> funcionarios;
+
+    public List<Funcionario> getFuncionarios() {
+        return funcionarios;
+    }
+
+    public void setFuncionarios(List<Funcionario> funcionarios) {
+        this.funcionarios = funcionarios;
+    }
+
     public List<Ancora> getAncoras() {
         return ancoras;
     }

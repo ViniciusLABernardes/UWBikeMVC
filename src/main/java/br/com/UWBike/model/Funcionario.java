@@ -1,4 +1,5 @@
 package br.com.UWBike.model;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -6,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_FUNCIONARIO")
@@ -30,6 +32,18 @@ public class Funcionario implements Serializable {
     @Column(name = "salario", nullable = false)
     private double salario;
 
+    @Column(name = "cargo",nullable = false)
+    private String cargo;
+
     @OneToOne(mappedBy = "funcionario", cascade = CascadeType.ALL)
     private Login login;
+
+    @ManyToMany
+    @JoinTable(
+            name = "TB_PATIO_FUNCIONARIO",
+            joinColumns = @JoinColumn(name = "id_funcionario"),
+            inverseJoinColumns = @JoinColumn(name = "id_patio")
+    )
+    @JsonBackReference("funcioRef")
+    private List<Patio> patios;
 }
