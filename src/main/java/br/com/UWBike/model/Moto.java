@@ -2,10 +2,12 @@ package br.com.UWBike.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 import java.util.List;
 
 @Entity
+
 @Table(name = "tb_moto")
 @SequenceGenerator(name = "moto_seq",allocationSize = 1,sequenceName = "tb_moto_seq")
 

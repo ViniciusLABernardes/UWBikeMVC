@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="pt-br" >
+<head>
+  <meta charset="UTF-8">
+  <title>Login</title>
+
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/signup.js" defer></script>
+</head>
+
+<body style="display:flex;flex-direction:column;align-items: center;">
+<img th:src="@{/images/UWBike-logo.jpg}" alt="UWBike logo" style="width: 250px;height: auto;display: flex;align-items: center;">
+<H1 class="">UWBike</H1>
+<section class="login-section">
+    <form action="/login" method="post" class="login-form">
+        <input type="text" name="username" id="username" class="login-input" placeholder="Login" required />
+        <input type="password" name="password" id="password" class="login-input" placeholder="Senha" required />
+        <button type="submit" class="login-button">Login</button>
+    </form>
+</section>
+</body>
+  

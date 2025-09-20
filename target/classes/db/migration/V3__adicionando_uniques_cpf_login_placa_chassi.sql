@@ -6,3 +6,6 @@ ALTER TABLE TB_MOTO
 
 ALTER TABLE TB_LOGIN
     ADD CONSTRAINT uk_tb_login_login UNIQUE (login);
+
+ALTER TABLE TB_MOTO
+    ADD CONSTRAINT uk_tb_moto_chassi UNIQUE(chassi);

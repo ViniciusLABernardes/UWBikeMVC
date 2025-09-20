@@ -1,14 +1,12 @@
 package br.com.UWBike.dto;
 
+import br.com.UWBike.model.Login;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+@Data
 public class FuncionarioRequestDto {
-
-    @Data
-    public class FuncionarioDTO {
-
 
         @NotBlank
         private String nomeFunc;
@@ -23,12 +21,8 @@ public class FuncionarioRequestDto {
         private String cargo;
 
         @NotBlank
-        private String login;
+        private LoginRequestDto login;
 
-        @NotBlank
-        private String senha;
-
-        private Long idPatio;
-    }
+        private long idPatio;
 
 }

@@ -111,6 +111,9 @@ public class MotoPatioService {
 
     }
 
+    public List<MotoPatio> listarMotosPorPatio(Patio patio) {
+        return motoPatioRepository.findByPatio(patio);
+    }
 
 }
 

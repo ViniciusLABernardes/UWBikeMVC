@@ -15,9 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-import static jdk.internal.org.jline.reader.impl.LineReaderImpl.CompletionType.List;
+
 
 @Service
 public class FuncionarioService {
@@ -28,7 +29,7 @@ public class FuncionarioService {
     @Autowired
     private PatioRepository patioRepository;
 
-    public Funcionario salvarFuncionario(FuncionarioRequestDto.FuncionarioDTO dto) throws IdNaoEncontradoException {
+    public Funcionario salvarFuncionario(FuncionarioRequestDto dto) throws IdNaoEncontradoException {
 
         Funcionario funcionario = new Funcionario();
         funcionario.setNomeFunc(dto.getNomeFunc());
@@ -39,11 +40,11 @@ public class FuncionarioService {
 
         Login login = new Login();
         login.setFuncionario(funcionario);
-        login.setLogin(dto.getLogin());
-        login.setSenha(passwordEncoder.encode(dto.getSenha()));
+        login.setLogin(dto.getLogin().getLogin());
+        login.setSenha(passwordEncoder.encode(dto.getLogin().getSenha()));
         funcionario.setLogin(login);
 
-        if(dto.getIdPatio() != null){
+        if(dto.getIdPatio() != 0){
             Patio patio = patioRepository.findById(dto.getIdPatio())
                     .orElseThrow(() -> new IdNaoEncontradoException("Pátio não encontrado"));
 
@@ -81,17 +82,33 @@ public class FuncionarioService {
         return funcionarioRepository.findById(id);
     }
 
-    public Boolean logar(LoginRequestDto login){
-        try{
-           Login l = funcionarioRepository.findByLogin(login.getLogin()).orElseThrow(() -> new IdNaoEncontradoException("Funcionario não encontrada"));
-            if(login.equals(l.getLogin())) return true;
+    //função para converter os valores das senhas inseridas manualmente no banco para senhas criptografadas
+    @Transactional
+    public void atualizarSenhasParaBCrypt() {
+        List<Funcionario> funcionarios = funcionarioRepository.findAll();
 
-        } catch (IdNaoEncontradoException e) {
+        for (Funcionario f : funcionarios) {
+            Login login = f.getLogin();
+            if (login != null) {
+                String senha = login.getSenha();
 
-            throw new RuntimeException(e);
 
+                if (!senha.startsWith("$2a$") && !senha.startsWith("$2b$")) {
+                    String senhaCriptografada = passwordEncoder.encode(senha);
+                    login.setSenha(senhaCriptografada);
+                    System.out.println("Senha do login " + login.getLogin() + " atualizada para BCrypt.");
+                }
+            }
         }
-        return false;
+
+        funcionarioRepository.saveAll(funcionarios);
+    }
+
+    public Optional<Funcionario> buscarPorLogin(String login) {
+        return funcionarioRepository.findByLogin_Login(login);
+    }
+    public List<Patio> listarFuncionariosPorPatio() {
+        return patioRepository.findAll();
     }
     
 }

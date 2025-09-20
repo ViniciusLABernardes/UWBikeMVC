@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 
 @Entity
+
 @Table(name = "tb_moto_patio")
 public class MotoPatio {
     public MotoPatio(){

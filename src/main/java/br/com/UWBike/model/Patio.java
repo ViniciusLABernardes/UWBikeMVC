@@ -3,10 +3,13 @@ package br.com.UWBike.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import lombok.Builder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+
 @Table(name = "tb_patio")
 @SequenceGenerator(sequenceName = "tb_patio_seq",name = "patio_seq",allocationSize = 1)
 public class Patio {
@@ -56,15 +59,15 @@ public class Patio {
 
     @OneToMany(mappedBy = "patio", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference("patioRef")
-    private List<MotoPatio> entradas;
+    private List<MotoPatio> entradas = new ArrayList<>();;
 
     @OneToMany(mappedBy = "patio", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JsonManagedReference("ancoraRef")
-    private List<Ancora> ancoras;
+    private List<Ancora> ancoras = new ArrayList<>();;
 
     @ManyToMany(mappedBy = "patios")
     @JsonManagedReference("funcioRef")
-    private List<Funcionario> funcionarios;
+    private List<Funcionario> funcionarios = new ArrayList<>();;
 
     public List<Funcionario> getFuncionarios() {
         return funcionarios;

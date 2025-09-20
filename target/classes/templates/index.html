@@ -2,52 +2,57 @@
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8" />
-    <title>Catálogo de Itens</title>
+    <title>UWBike</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 </head>
 <body>
-<header class="header">
-    <h1>Itens</h1>
-    <a th:href="@{/novo}" class="btn-primary">+ Nova moto</a>
-</header>
+<div th:replace="fragments/header :: headerFragment"></div>
+
+<h1 style="padding-bottom: 2em">Motos no pátio</h1>
+<a th:href="@{/moto/novo}" class="btn-primary">+ Nova moto</a>
 
 <main class="card">
     <table class="table">
         <thead>
         <tr>
-            <th>Nome</th>
-            <th>Tipo</th>
-            <th>Classificação</th>
-            <th class="num">Tamanho</th>
-            <th class="num">Preço (R$)</th>
+            <th>Id</th>
+            <th>Modelo</th>
+            <th>Placa</th>
+            <th>Patio</th>
+            <th>Entrada</th>
+            <th>Saída</th>
             <th>Ações</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:if="${#lists.isEmpty(itens)}">
-            <td colspan="6" class="muted">Sem dados ainda. Deseja cadastrar um item?</td>
-        </tr>
-        <tr th:each="it : ${itens}">
-            <td th:text="${it.nomeItem}">Nome</td>
-            <td th:text="${it.tipoItem}">Tipo</td>
-            <td th:text="${it.classificacaoItem}">Classe</td>
-            <td class="num" th:text="${#numbers.formatDecimal(it.tamanhoItem,1,2)}">0.00</td>
-            <td class="num" th:text="${#numbers.formatDecimal(it.precoItem,1,2)}">0.00</td>
+
+        <tr th:each="motoPatio : ${motosPatio}">
+            <td th:text="${motoPatio.moto.id_moto}"></td>
+            <td th:text="${motoPatio.moto.modelo}"></td>
+            <td th:text="${motoPatio.moto.placa}"></td>
+            <td th:text="${motoPatio.patio.logradouro}"></td>
+            <td th:text="${#temporals.format(motoPatio.dataHoraEntrada, 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="${motoPatio.dataHoraSaida != null ? #temporals.format(motoPatio.dataHoraSaida, 'dd/MM/yyyy HH:mm') : '-'}"></td>
             <td class="actions">
-                <a th:href="@{'/itens/' + ${it.idItem} + '/editar'}" class="btn-outline">Editar</a>
-                <form th:action="@{'/itens/' + ${it.idItem} + '/excluir'}" method="post"
+                <a th:href="@{'/motos/' + ${motoPatio.moto.id_moto} + '/editar'}" class="btn-outline">Editar</a>
+                <form th:action="@{'/motos/' + ${motoPatio.moto.id_moto} + '/excluir'}" method="post"
                       onsubmit="return confirm('Confirmar exclusão?');" style="display:inline;">
                     <button type="submit" class="btn-danger">Excluir</button>
                 </form>
             </td>
         </tr>
+
+        <tr th:if="${#lists.isEmpty(motosPatio)}">
+            <td colspan="7" class="muted">Nenhuma moto registrada ainda. Deseja cadastrar uma?</td>
+        </tr>
+
         </tbody>
     </table>
 </main>
 
 <footer class="footer">
-    <small class="muted">Ferramentas.com</small>
+    <small class="muted">UWBike</small>
 </footer>
 </body>
 </html>

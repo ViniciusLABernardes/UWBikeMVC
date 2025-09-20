@@ -18,13 +18,16 @@ public class FuncionarioUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        Funcionario funcionario = funcionarioRepository.findByLogin(login)
-                .orElseThrow(() -> new UsernameNotFoundException("Login não encontrado: " + login)).getFuncionario();
+        Funcionario funcionario = funcionarioRepository.findByLogin_Login(login)
+                .orElseThrow(() -> new UsernameNotFoundException("Login não encontrado: " + login));
+
+
 
         return User.builder()
                 .username(funcionario.getLogin().getLogin())
                 .password(funcionario.getLogin().getSenha())
-                .roles(funcionario.getCargo())
+                .roles(funcionario.getCargo().toUpperCase())
                 .build();
+
     }
 }

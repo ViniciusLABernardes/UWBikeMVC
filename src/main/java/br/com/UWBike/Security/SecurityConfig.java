@@ -46,11 +46,12 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .formLogin(form -> form
-                        .loginPage("/req/login").permitAll()
-                        .defaultSuccessUrl("/index")
+                        .loginPage("/login").permitAll()
+                        .defaultSuccessUrl("/index", true)
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/req/signup", "/css/**", "/js/**", "/req/trocar-senha").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/funcionario/**").hasRole("GERENTE")
                         .anyRequest().authenticated()
                 )
                 .build();

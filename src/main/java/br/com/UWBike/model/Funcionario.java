@@ -1,10 +1,7 @@
 package br.com.UWBike.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -12,6 +9,7 @@ import java.util.List;
 @Entity
 @Table(name = "TB_FUNCIONARIO")
 @Getter
+@Builder
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
@@ -38,7 +36,7 @@ public class Funcionario implements Serializable {
     @OneToOne(mappedBy = "funcionario", cascade = CascadeType.ALL)
     private Login login;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "TB_PATIO_FUNCIONARIO",
             joinColumns = @JoinColumn(name = "id_funcionario"),

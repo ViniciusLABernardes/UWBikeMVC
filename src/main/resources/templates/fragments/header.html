@@ -1,0 +1,17 @@
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<div th:fragment="headerFragment">
+    <header class="header-container">
+
+        <img th:src="@{/images/UWBike-logo.jpg}" alt="UWBike logo">
+        <a th:href="@{/index}" class="btn-primary">Ver motos do pátio</a>
+        <a th:href="@{/funcionario/funcionarios}" class="btn-secondary">Gerenciar funcionários</a>
+        <a th:href="@{/logout}" class="btn-primary">Logout</a>
+
+    </header>
+</div>
+</body>
+</html>

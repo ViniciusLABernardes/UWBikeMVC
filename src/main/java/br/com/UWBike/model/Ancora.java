@@ -2,8 +2,10 @@ package br.com.UWBike.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
+import lombok.Builder;
 
 @Entity
+
 @Table(name = "TB_ANCORA")
 @SequenceGenerator(name = "ancora_seq",allocationSize = 1,sequenceName = "tb_ancora_seq")
 public class Ancora {

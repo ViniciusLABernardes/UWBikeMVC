@@ -18,21 +18,22 @@ INSERT INTO TB_FUNCIONARIO(id_funcionario,nome_func,cpf,salario) VALUES (17,'San
 INSERT INTO TB_FUNCIONARIO(id_funcionario,nome_func,cpf,salario) VALUES (18,'Valentina','MEXA920715HDFRRN08',2950.60);
 INSERT INTO TB_FUNCIONARIO(id_funcionario,nome_func,cpf,salario) VALUES (19,'Emilio','MEXE930815HDFRRN09',3400.80);
 
-INSERT INTO TB_PATIO(id_patio,logradouro,numero,cep,cidade,uf,pais) values(1,'Avenida Professor Celestino Bourroul',363,'02710-000','São Paulo','SP','Brasil');
-INSERT INTO TB_PATIO(id_patio,logradouro,numero,cep,cidade,uf,pais) values(2,'Avenida Valdemar Ferreira',136,'05501-010','São Paulo','SP','Brasil');
-INSERT INTO TB_PATIO(id_patio,logradouro,numero,cep,cidade,uf,pais) values(3,'Rua Antônio Pegoraro',110,'07131-403','Guarulhos','SP','Brasil');
-INSERT INTO TB_PATIO(id_patio,logradouro,numero,cep,cidade,uf,pais) values(4,'Alameda São Boaventural',460,'24120-191','Niterói','RJ','Brasil');
-INSERT INTO TB_PATIO(id_patio,logradouro,numero,cep,cidade,uf,pais) values(5,'Laguna del Carmen',115,'11320','Ciudad de México','CDMX','México');
+INSERT INTO TB_PATIO(id_patio,logradouro,numero,cep,cidade,uf,pais,lotacao_max) values(1,'Avenida Professor Celestino Bourroul',363,'02710-000','São Paulo','SP','Brasil',150);
+INSERT INTO TB_PATIO(id_patio,logradouro,numero,cep,cidade,uf,pais,lotacao_max) values(2,'Avenida Valdemar Ferreira',136,'05501-010','São Paulo','SP','Brasil',300);
+INSERT INTO TB_PATIO(id_patio,logradouro,numero,cep,cidade,uf,pais,lotacao_max) values(3,'Rua Antônio Pegoraro',110,'07131-403','Guarulhos','SP','Brasil',200);
+INSERT INTO TB_PATIO(id_patio,logradouro,numero,cep,cidade,uf,pais,lotacao_max) values(4,'Alameda São Boaventural',460,'24120-191','Niterói','RJ','Brasil',150);
+INSERT INTO TB_PATIO(id_patio,logradouro,numero,cep,cidade,uf,pais,lotacao_max) values(5,'Laguna del Carmen',115,'11320','Ciudad de México','CDMX','México',300);
 
-INSERT INTO TB_MOTO(id_moto,modelo,placa) VALUES (1,'MottuPop','DFR8C12');
-INSERT INTO TB_MOTO(id_moto,modelo,placa) VALUES (2,'MottuPop','K23LMT');
-INSERT INTO TB_MOTO(id_moto,modelo,placa) VALUES (3,'MottuSport','PLM5G77');
-INSERT INTO TB_MOTO(id_moto,modelo,placa) VALUES (4,'MottuSport','BRN2C98');
-INSERT INTO TB_MOTO(id_moto,modelo,placa) VALUES (5,'MottuSport','LKP7M12');
-INSERT INTO TB_MOTO(id_moto,modelo,placa) VALUES (6,'MottuSport','GYT3H67');
-INSERT INTO TB_MOTO(id_moto,modelo,placa) VALUES (7,'MottuE','TRQ9A01');
-INSERT INTO TB_MOTO(id_moto,modelo,placa) VALUES (8,'MottuE','ZXY2M48');
-INSERT INTO TB_MOTO(id_moto,modelo,placa) VALUES (9,'MottuE','VBN6T30');
-INSERT INTO TB_MOTO(id_moto,modelo,placa) VALUES (10,'MottuE','62DKV4');
+INSERT INTO TB_MOTO(id_moto,modelo,placa,chassi) VALUES (1,'MottuPop','DFR8C12','9BWZZZ377VT004251');
+INSERT INTO TB_MOTO(id_moto,modelo,placa,chassi) VALUES (2,'MottuPop','K23LMT','8AFZZZ128RT002198');
+INSERT INTO TB_MOTO(id_moto,modelo,placa,chassi) VALUES (3,'MottuSport','PLM5G77','93HZZZ453KT009876');
+INSERT INTO TB_MOTO(id_moto,modelo,placa,chassi) VALUES (4,'MottuSport','BRN2C98','1HGZZZ659PL003452');
+INSERT INTO TB_MOTO(id_moto,modelo,placa,chassi) VALUES (5,'MottuSport','LKP7M12','2FMZZZ982TR007321');
+INSERT INTO TB_MOTO(id_moto,modelo,placa,chassi) VALUES (6,'MottuSport','GYT3H67','5XYZZZ774JP001245');
+INSERT INTO TB_MOTO(id_moto,modelo,placa,chassi) VALUES (7,'MottuE','TRQ9A01','JHMZZZ826PL009111');
+INSERT INTO TB_MOTO(id_moto,modelo,placa,chassi) VALUES (8,'MottuE','ZXY2M48','WVWZZZ1JXTP004876');
+INSERT INTO TB_MOTO(id_moto,modelo,placa,chassi) VALUES (9,'MottuE','VBN6T30','3CZRRZZ59GM002341');
+INSERT INTO TB_MOTO(id_moto,modelo,placa,chassi) VALUES (10,'MottuE','62DKV4','KL1ZZZ564NR001908');
+
 
 
