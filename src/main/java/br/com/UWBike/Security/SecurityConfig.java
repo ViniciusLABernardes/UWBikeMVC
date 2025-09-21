@@ -53,6 +53,7 @@ public class SecurityConfig {
                         .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/funcionario/**").hasRole("GERENTE")
                         .requestMatchers("/ancora/**").hasRole("GERENTE")
+                        .requestMatchers("/patio/**").hasRole("GERENTE")
                         .anyRequest().authenticated()
                 )
                 .build();

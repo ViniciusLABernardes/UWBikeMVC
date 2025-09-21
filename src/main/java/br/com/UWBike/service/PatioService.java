@@ -63,28 +63,6 @@ public class PatioService {
     }
 
 
-    public List<PatioResponseDto> listarPatios() {
-        try {
-            return patioRepository.findAll()
-                    .stream()
-                    .map(patio -> new PatioResponseDto(
-                            patio.getIdPatio(),
-                            patio.getLogradouro(),
-                            patio.getNumero(),
-                            patio.getComplemento(),
-                            patio.getCep(),
-                            patio.getCidade(),
-                            patio.getUf(),
-                            patio.getPais(),
-                            patio.getLotacao()
-                            ))
-                    .toList();
-        } catch (Exception e) {
-            System.out.println("Houve um erro ao tentar resgatar todos os pátios: ");
-            e.printStackTrace();
-            return new ArrayList<>();
-        }
-    }
 
     public Optional<Patio> visualizarDadosPatioEspecifico(Long id) {
         return patioRepository.findById(id);

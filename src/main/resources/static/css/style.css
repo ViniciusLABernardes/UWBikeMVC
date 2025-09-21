@@ -75,6 +75,7 @@ footer {
 .btn-danger {
     background-color: var(--danger);
     color: #fff;
+    text-align: center;
     min-width: 5em;
     width: 6vw;
 
@@ -156,7 +157,8 @@ footer {
     background-color: #4B9E32;
 }
 .table {
-    width: 50vw;
+    width: 60vw;
+    height: 50vh;
     border-collapse: collapse;
     background-color: var(--alt-green);
     margin-bottom: 20px;
@@ -183,7 +185,6 @@ footer {
 }
 
 .actions {
-
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
@@ -191,7 +192,16 @@ footer {
     padding: 8px;
     gap: 15px;
 }
+td.actions-cell {
+    width: 150px;
+}
 
+td.actions-cell .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: flex-start;
+}
 .muted {
     color: var(--muted);
 }
