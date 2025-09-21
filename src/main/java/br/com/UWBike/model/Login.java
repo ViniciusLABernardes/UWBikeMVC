@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class Login implements Serializable {
 
     @Id
-    @Column(name = "ID_FUNCIONARIO")
+    @Column(name = "id_funcionario")
     private Long idFuncionario;
 
     @OneToOne

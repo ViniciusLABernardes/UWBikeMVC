@@ -13,7 +13,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@SequenceGenerator(name = "SQ_FUNCIONARIO", sequenceName = "SQ_FUNCIONARIO", allocationSize = 1)
+@SequenceGenerator(name = "SQ_FUNCIONARIO", sequenceName = "tb_funcionario_seq", allocationSize = 1)
 public class Funcionario implements Serializable {
 
     @Id
@@ -33,7 +33,8 @@ public class Funcionario implements Serializable {
     @Column(name = "cargo",nullable = false)
     private String cargo;
 
-    @OneToOne(mappedBy = "funcionario", cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_funcionario")
     private Login login;
 
     @ManyToMany(fetch = FetchType.EAGER)

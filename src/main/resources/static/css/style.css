@@ -18,7 +18,6 @@
 
 body {
 
-
     font-family: system-ui, Arial, sans-serif;
     background: var(--bg);
     color: #000;
@@ -34,7 +33,14 @@ body {
     margin-bottom: 16px;
     flex-wrap: wrap;
 }
+footer {
+    display: flex;
+    padding-top: 25vh;
+    justify-content: center;
+    align-items: end;
+    text-align: center;
 
+}
 .searchbar {
     display: flex;
     gap: 8px;
@@ -60,15 +66,18 @@ body {
     color: #fff;
 }
 .btn-outline {
-    background: transparent;
-    color: #000; /* melhor contraste */
-    border-color: var(--line);
+    background-color: var(--muted);
+    color: #fff;
+    min-width: 4.2em;
+    width: 6vw;
 }
 
 .btn-danger {
-    background: transparent;
-    color: #ff6b6b;
-    border-color: var(--danger);
+    background-color: var(--danger);
+    color: #fff;
+    min-width: 5em;
+    width: 6vw;
+
 }
 
 .card {
@@ -81,6 +90,7 @@ body {
 }
 .login-section {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 50vh;
@@ -100,12 +110,12 @@ body {
 }
 .header-container {
     display: flex;
-
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 5em;
-
+    column-gap: 5em;
+    padding-bottom: 5em;
 }
 
 .header-container img {
@@ -146,15 +156,26 @@ body {
     background-color: #4B9E32;
 }
 .table {
-
-    width: 100%;
+    width: 50vw;
     border-collapse: collapse;
+    background-color: var(--alt-green);
+    margin-bottom: 20px;
+    border-radius: 12px;
+    border:none;
 }
 
 .table th,
 .table td {
+
     padding: 10px 12px;
-    border-bottom: 1px solid var(--line);
+    color: #fff;
+    text-align: center;
+}
+
+.table th {
+
+    background-color: var(--primary);
+    color: #fff;
 }
 
 .table .num {
@@ -162,8 +183,13 @@ body {
 }
 
 .actions {
+
     display: flex;
-    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    color: #fff;
+    padding: 8px;
+    gap: 15px;
 }
 
 .muted {

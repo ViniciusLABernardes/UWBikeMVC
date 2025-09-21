@@ -13,7 +13,10 @@ import br.com.UWBike.repository.MotoRepository;
 import br.com.UWBike.repository.PatioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.sql.DataSource;
+import java.sql.*;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -29,22 +32,76 @@ public class MotoPatioService {
     private PatioRepository patioRepository;
 
     @Autowired
+    private DataSource dataSource;
+    @Autowired
     private AncoraRepository ancoraRepository;
 
-    public MotoPatio adicionarMotoAoPatio(Long idMoto, Long idPatio) throws IdNaoEncontradoException {
-        Moto moto = motoRepository.findById(idMoto)
-                .orElseThrow(() -> new IdNaoEncontradoException("Moto com ID " + idMoto + " não encontrada."));
 
-        Patio patio = patioRepository.findById(idPatio)
-                .orElseThrow(() -> new IdNaoEncontradoException("Pátio com ID " + idPatio + " não encontrado."));
+    public MotoPatio adicionarMotoAoPatio(Long idMoto, Long idPatio) throws SQLException, IdNaoEncontradoException {
+        String sqlCheckMoto = "SELECT id_moto, modelo, placa, chassi FROM tb_moto WHERE id_moto = ?";
+        String sqlCheckPatio = "SELECT id_patio, logradouro, numero, complemento, cep, cidade, uf, pais, lotacao_max FROM tb_patio WHERE id_patio = ?";
+        String sqlInsertMotoPatio = "INSERT INTO tb_moto_patio (id_moto, id_patio, data_hora_entrada) VALUES (?, ?, ?)";
 
-        MotoPatio motoPatio = new MotoPatio();
-        motoPatio.setMoto(moto);
-        motoPatio.setPatio(patio);
-        motoPatio.setDataHoraEntrada(LocalDateTime.now());
+        Moto moto;
+        Patio patio;
 
-        return motoPatioRepository.save(motoPatio);
+        try (Connection conn = dataSource.getConnection()) {
+
+
+            try (PreparedStatement ps = conn.prepareStatement(sqlCheckMoto)) {
+                ps.setLong(1, idMoto);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (!rs.next()) throw new IdNaoEncontradoException("Moto com ID " + idMoto + " não encontrada.");
+                    moto = new Moto();
+                    moto.setId_moto(rs.getLong("id_moto"));
+                    moto.setModelo(rs.getString("modelo"));
+                    moto.setPlaca(rs.getString("placa"));
+                    moto.setChassi(rs.getString("chassi"));
+                }
+            }
+
+
+            try (PreparedStatement ps = conn.prepareStatement(sqlCheckPatio)) {
+                ps.setLong(1, idPatio);
+                try (ResultSet rs = ps.executeQuery()) {
+                    if (!rs.next()) throw new IdNaoEncontradoException("Pátio com ID " + idPatio + " não encontrado.");
+                    patio = new Patio();
+                    patio.setIdPatio(rs.getLong("id_patio"));
+                    patio.setLogradouro(rs.getString("logradouro"));
+                    patio.setNumero(rs.getInt("numero"));
+                    patio.setComplemento(rs.getString("complemento"));
+                    patio.setCep(rs.getString("cep"));
+                    patio.setCidade(rs.getString("cidade"));
+                    patio.setUf(rs.getString("uf"));
+                    patio.setPais(rs.getString("pais"));
+                    patio.setLotacao(rs.getInt("lotacao_max"));
+                }
+            }
+
+
+            try (PreparedStatement ps = conn.prepareStatement(sqlInsertMotoPatio, Statement.RETURN_GENERATED_KEYS)) {
+                ps.setLong(1, idMoto);
+                ps.setLong(2, idPatio);
+                ps.setTimestamp(3, Timestamp.valueOf(LocalDateTime.now()));
+                ps.executeUpdate();
+
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        Long idMotoPatio = rs.getLong(1);
+                        MotoPatio motoPatio = new MotoPatio();
+                        motoPatio.setId(idMotoPatio);
+                        motoPatio.setMoto(moto);
+                        motoPatio.setPatio(patio);
+                        motoPatio.setDataHoraEntrada(LocalDateTime.now());
+                        return motoPatio;
+                    } else {
+                        throw new SQLException("Erro ao obter ID gerado de MotoPatio");
+                    }
+                }
+            }
+        }
     }
+
 
 
     public MotoPatio adicionarSaidaMoto(Long idMoto) throws IdNaoEncontradoException{

@@ -14,6 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.sql.DataSource;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,34 +32,80 @@ public class FuncionarioService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
+    private DataSource dataSource;
+    @Autowired
     private PatioRepository patioRepository;
 
-    public Funcionario salvarFuncionario(FuncionarioRequestDto dto) throws IdNaoEncontradoException {
+    public Funcionario salvarFuncionario(FuncionarioRequestDto dto) throws Exception {
+        String insertFuncionario = """
+            INSERT INTO tb_funcionario (id_funcionario, nome_func, cpf, salario, cargo)
+            VALUES (tb_funcionario_seq.NEXTVAL, ?, ?, ?, ?)
+        """;
 
-        Funcionario funcionario = new Funcionario();
-        funcionario.setNomeFunc(dto.getNomeFunc());
-        funcionario.setCpf(dto.getCpf());
-        funcionario.setSalario(dto.getSalario());
-        funcionario.setCargo(dto.getCargo());
+        String insertLogin = """
+            INSERT INTO tb_login (id_funcionario, login, senha)
+            VALUES (?, ?, ?)
+        """;
+
+        String insertPatio = """
+            INSERT INTO tb_patio_funcionario (id_patio, id_funcionario)
+            VALUES (?, ?)
+        """;
+
+        try (Connection conn = dataSource.getConnection()) {
+            conn.setAutoCommit(false);
 
 
-        Login login = new Login();
-        login.setFuncionario(funcionario);
-        login.setLogin(dto.getLogin().getLogin());
-        login.setSenha(passwordEncoder.encode(dto.getLogin().getSenha()));
-        funcionario.setLogin(login);
+            Long idFuncionario = null;
+            try (PreparedStatement ps = conn.prepareStatement(insertFuncionario, new String[]{"id_funcionario"})) {
+                ps.setString(1, dto.getNomeFunc());
+                ps.setString(2, dto.getCpf());
+                ps.setDouble(3, dto.getSalario());
+                ps.setString(4, dto.getCargo());
+                ps.executeUpdate();
 
-        if(dto.getIdPatio() != 0){
-            Patio patio = patioRepository.findById(dto.getIdPatio())
-                    .orElseThrow(() -> new IdNaoEncontradoException("Pátio não encontrado"));
+                try (ResultSet rs = ps.getGeneratedKeys()) {
+                    if (rs.next()) {
+                        idFuncionario = rs.getLong(1);
+                    }
+                }
+            }
 
-            ArrayList<Patio> patios = new ArrayList<>();
-            patios.add(patio);
-            funcionario.setPatios(patios);
+            if (idFuncionario == null) {
+                conn.rollback();
+                throw new SQLException("Falha ao gerar ID do funcionário");
+            }
+
+
+            try (PreparedStatement ps = conn.prepareStatement(insertLogin)) {
+                ps.setLong(1, idFuncionario);
+                ps.setString(2, dto.getLogin().getLogin());
+                ps.setString(3, passwordEncoder.encode(dto.getLogin().getSenha()));
+                ps.executeUpdate();
+            }
+
+
+            if (dto.getIdPatio() != 0) {
+                try (PreparedStatement ps = conn.prepareStatement(insertPatio)) {
+                    ps.setLong(1, dto.getIdPatio());
+                    ps.setLong(2, idFuncionario);
+                    ps.executeUpdate();
+                }
+            }
+
+            conn.commit();
+
+            Funcionario funcionario = new Funcionario();
+            funcionario.setIdFuncionario(idFuncionario);
+            funcionario.setNomeFunc(dto.getNomeFunc());
+            funcionario.setCpf(dto.getCpf());
+            funcionario.setSalario(dto.getSalario());
+            funcionario.setCargo(dto.getCargo());
+
+            return funcionario;
         }
-
-        return funcionarioRepository.save(funcionario);
     }
+
 
     public void removerFuncionario(Long id) throws IdNaoEncontradoException {
         Funcionario funcionarioAchado = funcionarioRepository.findById(id)
@@ -71,6 +122,7 @@ public class FuncionarioService {
         Funcionario funcionarioAchado = funcionarioRepository.findById(id)
                 .orElseThrow(() -> new IdNaoEncontradoException("Funcionario não encontrado"));
 
+        funcionarioAchado.setCargo(funcionario.getCargo());
         funcionarioAchado.setSalario(funcionario.getSalario());
 
         System.out.println("Funcionario: " + funcionarioAchado.getNomeFunc() + ", " + funcionario.getCpf()

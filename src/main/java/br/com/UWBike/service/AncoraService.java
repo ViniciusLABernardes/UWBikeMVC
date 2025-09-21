@@ -1,6 +1,7 @@
 package br.com.UWBike.service;
 
 
+import br.com.UWBike.dto.AncoraRequestDto;
 import br.com.UWBike.exceptions.IdNaoEncontradoException;
 import br.com.UWBike.model.Ancora;
 import br.com.UWBike.model.Patio;
@@ -20,14 +21,21 @@ public class AncoraService {
     @Autowired
     private AncoraRepository ancoraRepository;
 
-    public Ancora salvarAncoraComPatio(Ancora ancora, Long idPatio) throws IdNaoEncontradoException {
+    public Ancora salvarAncoraComPatio(AncoraRequestDto ancoraDto) throws IdNaoEncontradoException {
         Ancora ancoraNova = new Ancora();
         try {
-            Patio patio = patioRepository.findById(idPatio)
-                    .orElseThrow(() -> new IdNaoEncontradoException("Pátio com id " + idPatio + " não encontrado"));
+            ancoraNova.setX(ancoraDto.getX());
+            ancoraNova.setY(ancoraDto.getY());
 
-            ancora.setPatio(patio);
-            ancoraNova = ancoraRepository.save(ancora);
+            Optional<Patio> patioOpt = patioRepository.findById(ancoraDto.getIdPatio());
+            if (patioOpt.isEmpty()) {
+                throw new IdNaoEncontradoException("Patio não encontrado com id: " + ancoraDto.getIdPatio());
+            }
+
+            ancoraNova.setPatio(patioOpt.get());
+
+
+            ancoraRepository.save(ancoraNova);
         }catch (Exception e){
             System.out.println(e.getMessage());
         }

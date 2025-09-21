@@ -20,35 +20,55 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
 
-    @PostMapping("")
-    public String registrarFuncionario(@ModelAttribute("item") FuncionarioRequestDto item) throws IdNaoEncontradoException {
-        funcionarioService.salvarFuncionario(item);
-        return "redirect:/";
+    @GetMapping("/cadastrar")
+    public String exibirFormCadastro(Model model) {
+        model.addAttribute("funcionario", new FuncionarioRequestDto());
+        return "formulario-funcionario";
     }
 
-    @GetMapping("/remover/{id}")
-    public String removerFuncionario(@PathVariable Long id) throws IdNaoEncontradoException {
-        funcionarioService.removerFuncionario(id);
-        return "redirect:/funcionarios";
+    @PostMapping("/salvar")
+    public String salvarFuncionario(@ModelAttribute("funcionario") FuncionarioRequestDto dto) throws Exception {
+
+        funcionarioService.salvarFuncionario(dto);
+        return "redirect:/funcionario/funcionarios";
     }
 
-    @PostMapping("/atualizar/{id}")
-    public String atualizarFuncionario(@PathVariable Long id,
-                                       @ModelAttribute Funcionario funcionario) throws IdNaoEncontradoException {
-        funcionarioService.atualizarDadosFuncionario(id, funcionario);
-        return "redirect:/funcionarios/" + id;
-    }
 
-    @GetMapping("/{id}")
-    public String visualizarFuncionario(@PathVariable Long id, Model model) throws IdNaoEncontradoException {
-        Optional<Funcionario> funcionario = funcionarioService.visualizarDadosFuncionarioEspecifico(id);
-        if (funcionario.isPresent()) {
-            model.addAttribute("funcionario", funcionario.get());
-            return "funcionario-detalhes";
-        } else {
-            throw new IdNaoEncontradoException("Funcionário não encontrado");
+    @PostMapping("/{id}/excluir")
+    public String removerFuncionario(@PathVariable Long id, Model model) {
+        try {
+            funcionarioService.removerFuncionario(id);
+        } catch (IdNaoEncontradoException e) {
+            model.addAttribute("erro", e.getMessage());
         }
+        return "redirect:/funcionario/funcionarios";
     }
+
+    @GetMapping("/{id}/editar")
+    public String mostrarFormularioEdicao(@PathVariable Long id, Model model) {
+        Funcionario funcionario = funcionarioService.visualizarDadosFuncionarioEspecifico(id)
+                .orElseThrow(() -> new RuntimeException("Funcionário não encontrado"));
+
+            model.addAttribute("funcionario", funcionario);
+            return "formulario-funcionario";
+
+
+    }
+
+    @PostMapping("/{id}/atualizar")
+    public String atualizarFuncionario(@PathVariable Long id,
+                                       @ModelAttribute Funcionario funcionario,
+                                       Model model) {
+        try {
+            funcionarioService.atualizarDadosFuncionario(id, funcionario);
+        } catch (IdNaoEncontradoException e) {
+            model.addAttribute("erro", e.getMessage());
+            return "funcionario/editar";
+        }
+
+        return "redirect:/funcionario/funcionarios";
+    }
+
 
     @GetMapping("/funcionarios")
     public String listarFuncionarios(Model model) {

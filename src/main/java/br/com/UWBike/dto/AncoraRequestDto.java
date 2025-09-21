@@ -35,7 +35,6 @@ public class AncoraRequestDto {
         this.idPatio = idPatio;
     }
 
-    private Patio patio;
 
     public double getX() {
         return x;
@@ -53,11 +52,4 @@ public class AncoraRequestDto {
         this.y = y;
     }
 
-    public Patio getPatio() {
-        return patio;
-    }
-
-    public void setPatio(Patio patio) {
-        this.patio = patio;
-    }
 }

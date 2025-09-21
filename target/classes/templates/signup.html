@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>Registrar funcionário</title>
   <link rel="stylesheet" href="/css/style.css">
-  <script src="/js/signup.js" defer></script>
+
 </head>
 <body>
   <section>
@@ -46,37 +46,3 @@
   </section>
 </body>
 </html>
-<script>
-  const submitButttom = document.getElementById("submit");
-  submitButttom.addEventListener('click',()=>{
-    const nome = document.getElementById('nome').value;
-    const cpf = document.getElementById('cpf').value;
-    const salario = document.getElementById('salario').value;
-    const cargo = document.getElementById('cargo').value;
-    const login = document.getElementById('login').value;
-    const senha = document.getElementById('senha').value;
-    const confirmSenha = document.getElementById('senhacon').value;
-
-    const data ={
-      nome, cpf, salario, cargo, login, senha, confirmSenha
-    }
-    
-    if(senha === confirmSenha){
-      const jsonData = JSON.stringify(data);
-      fetch('/req/signup', {
-        method: 'POST',
-        headers:{
-          'Content-Type': 'application/json'
-        },
-        body: jsonData
-      })
-      .then(() =>{
-        alert('Funcionário cadastrado com sucesso!');
-
-      })
-    }
-    
-  })
-
-  
-</script>

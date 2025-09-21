@@ -62,25 +62,6 @@ public class PatioService {
 
     }
 
-    public Optional<Patio> visualizarDadosPatioEspecifica(Long id)  {
-        return patioRepository.findById(id);
-    }
-
-    public List<MotoResponseDto> visualizarMotosQueJaPassaramEstaoNoPatio(Long idPatio) throws IdNaoEncontradoException {
-        List<Moto> motos = patioRepository.findMotosByPatio(idPatio);
-
-        if (motos == null || motos.isEmpty()) {
-            throw new IdNaoEncontradoException("Nenhuma moto encontrada para o pátio com id " + idPatio);
-        }
-
-        return motos.stream()
-                .map(moto -> new MotoResponseDto(
-                        moto.getId_moto(),
-                        moto.getModelo(),
-                        moto.getPlaca(),
-                        moto.getChassi()))
-                .toList();
-    }
 
     public List<PatioResponseDto> listarPatios() {
         try {
@@ -105,5 +86,12 @@ public class PatioService {
         }
     }
 
+    public Optional<Patio> visualizarDadosPatioEspecifico(Long id) {
+        return patioRepository.findById(id);
+
+    }
+    public List<Patio> buscarTodosComAncoras() {
+        return patioRepository.findAll();
+    }
 
 }

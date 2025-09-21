@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 
 @Table(name = "tb_moto_patio")
+@SequenceGenerator(name = "moto_patio_seq",allocationSize = 1,sequenceName = "tb_moto_patio_seq")
 public class MotoPatio {
     public MotoPatio(){
 
@@ -21,10 +22,10 @@ public class MotoPatio {
 
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "moto_patio_seq")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "id_moto", nullable = false)
     @JsonBackReference("motoRef")
     private Moto moto;

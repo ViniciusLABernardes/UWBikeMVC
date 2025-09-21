@@ -8,7 +8,7 @@ spring:
   application:
     name: UWBike
   datasource:
-    password: 132
+    password: 123
     url: jdbc:oracle:thin:@//oracle.fiap.com.br:1521/ORCL
     username: RM****
     driver-class-name: oracle.jdbc.OracleDriver

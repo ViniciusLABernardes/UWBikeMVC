@@ -12,7 +12,7 @@
     <h1>Funcionários por Pátio</h1>
 
     <div style="margin-bottom: 20px; margin-top: 20px">
-        <a th:href="@{/funcionarios/novo}" class="btn-secondary">
+        <a th:href="@{/funcionario/cadastrar}" class="btn-secondary">
             + Adicionar Funcionário
         </a>
     </div>
@@ -20,7 +20,7 @@
     <div th:each="patio : ${patios}">
         <h2 th:text="'Pátio: ' + ${patio.logradouro}"></h2>
 
-        <table border="1" cellpadding="8" cellspacing="0">
+        <table class="table">
             <thead>
             <tr>
                 <th>ID</th>
@@ -40,12 +40,11 @@
                 <td th:text="${#numbers.formatDecimal(func.salario, 1, 'POINT', 2, 'COMMA')}"></td>
                 <td>
 
-                    <a th:href="@{/funcionarios/{id}/editar(id=${func.idFuncionario})}">
-                        <button type="button">Editar</button>
-                    </a>
 
-                    <form th:action="@{/funcionarios/{id}/excluir(id=${func.idFuncionario})}" method="post" style="display:inline;">
-                        <button type="submit" onclick="return confirm('Tem certeza que deseja excluir?')">Excluir</button>
+                    <a th:href="@{'/funcionario/' + ${func.idFuncionario} + '/editar'}" class="btn-outline">Editar</a>
+                    <form th:action="@{'/funcionario/' + ${func.idFuncionario} + '/excluir'}" method="post"
+                          onsubmit="return confirm('Confirmar exclusão?');" style="display:inline;">
+                        <button type="submit" class="btn-danger">Excluir</button>
                     </form>
                 </td>
             </tr>
@@ -56,5 +55,6 @@
         </table>
     </div>
 </section>
+    <div th:replace="fragments/footer :: footerFragment"></div>
 </body>
 </html>

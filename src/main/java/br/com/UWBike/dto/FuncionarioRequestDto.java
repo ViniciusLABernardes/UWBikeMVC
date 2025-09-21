@@ -20,7 +20,7 @@ public class FuncionarioRequestDto {
         @NotBlank
         private String cargo;
 
-        @NotBlank
+        @NotNull
         private LoginRequestDto login;
 
         private long idPatio;
