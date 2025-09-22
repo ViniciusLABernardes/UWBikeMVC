@@ -38,7 +38,7 @@ Desenvolver uma aplicação que:
 <img width="1919" height="1079" alt="login" src="https://github.com/user-attachments/assets/4501917d-f8d5-428f-972d-c8f52c997732" />
 
 ### 2 - Home/Gerenciar motos
-- esta é a pagina inicial, onde você ira ver todas as motos registradas no pátio em que você(funcionario) se encontra, além de um botão de adicionar moto, e botões de editar/excluir moto. A principal funcionalidade é o localizar motos.
+- esta é a pagina inicial, onde você ira ver todas as motos registradas no pátio em que você(funcionario) se encontra, além de um botão de adicionar moto, adicionar saida da moto do pátio(data e hora) e botões de editar/excluir moto. A principal funcionalidade é o localizar motos.
 <img width="1919" height="1079" alt="home" src="https://github.com/user-attachments/assets/3b008998-0d25-49f7-b475-5c2de1ff1c96" />
 
 ### 3 - Localizar moto
