@@ -1,7 +1,7 @@
 package br.com.UWBike.service;
 
 import br.com.UWBike.dto.FuncionarioRequestDto;
-import br.com.UWBike.dto.LoginRequestDto;
+
 import br.com.UWBike.exceptions.IdNaoEncontradoException;
 import br.com.UWBike.model.Funcionario;
 
@@ -106,12 +106,13 @@ public class FuncionarioService {
         }
     }
 
-
+    @Transactional
     public void removerFuncionario(Long id) throws IdNaoEncontradoException {
         Funcionario funcionarioAchado = funcionarioRepository.findById(id)
                 .orElseThrow(() -> new IdNaoEncontradoException("Funcionario não encontrada"));
 
-        funcionarioRepository.deleteById(id);
+        funcionarioRepository.delete(funcionarioAchado);
+
 
         System.out.println("Funcionario: " + funcionarioAchado.getNomeFunc() + ", " + funcionarioAchado.getCpf() + " deletado com sucesso!");
 

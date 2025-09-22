@@ -57,10 +57,10 @@ CREATE TABLE tb_ancora (
                            PRIMARY KEY (id)
 );
 
-ALTER TABLE tb_ancora ADD CONSTRAINT fk_ancora_patio FOREIGN KEY (id_patio) REFERENCES tb_patio;
-ALTER TABLE tb_login ADD CONSTRAINT fk_funcionario_login FOREIGN KEY (id_funcionario) REFERENCES tb_funcionario;
-ALTER TABLE tb_moto_patio ADD CONSTRAINT fk_motopatio_moto FOREIGN KEY (id_moto) REFERENCES tb_moto;
-ALTER TABLE tb_moto_patio ADD CONSTRAINT fk_motopatio_patio FOREIGN KEY (id_patio) REFERENCES tb_patio;
+ALTER TABLE tb_ancora ADD CONSTRAINT fk_ancora_patio FOREIGN KEY (id_patio) REFERENCES tb_patio ON DELETE CASCADE;
+ALTER TABLE tb_login ADD CONSTRAINT fk_funcionario_login FOREIGN KEY (id_funcionario) REFERENCES tb_funcionario ON DELETE CASCADE;
+ALTER TABLE tb_moto_patio ADD CONSTRAINT fk_motopatio_moto FOREIGN KEY (id_moto) REFERENCES tb_moto ON DELETE CASCADE;
+ALTER TABLE tb_moto_patio ADD CONSTRAINT fk_motopatio_patio FOREIGN KEY (id_patio) REFERENCES tb_patio ON DELETE CASCADE;
 
 CREATE OR REPLACE TRIGGER trg_funcionario_id
     BEFORE INSERT ON tb_funcionario

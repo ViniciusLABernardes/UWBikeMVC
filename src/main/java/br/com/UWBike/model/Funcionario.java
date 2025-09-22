@@ -33,8 +33,7 @@ public class Funcionario implements Serializable {
     @Column(name = "cargo",nullable = false)
     private String cargo;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_funcionario")
+    @OneToOne(mappedBy = "funcionario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Login login;
 
     @ManyToMany(fetch = FetchType.EAGER)
