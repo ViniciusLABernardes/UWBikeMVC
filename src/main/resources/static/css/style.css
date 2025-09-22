@@ -169,6 +169,8 @@ footer {
 .table th,
 .table td {
 
+
+    justify-content: start;
     padding: 10px 12px;
     color: #fff;
     text-align: center;
@@ -187,20 +189,24 @@ footer {
 .actions {
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-end;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
     color: #fff;
     padding: 8px;
     gap: 15px;
+
 }
 td.actions-cell {
     width: 150px;
+
 }
 
 td.actions-cell .actions {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    justify-content: flex-start;
+    justify-content: center;
 }
 .muted {
     color: var(--muted);
@@ -224,7 +230,15 @@ td.actions-cell .actions {
     background: #eee;
     color: #000;
 }
-
+.info {
+    background-color: #f9f9a9;
+    color: #333;
+    border-left: 4px solid #ffcc00;
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    font-size: 0.95rem;
+}
 .error {
     color: #ff6b6b;
     font-size: 12px;

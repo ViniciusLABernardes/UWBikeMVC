@@ -13,8 +13,10 @@
     <h1 >Motos no pátio</h1>
     <div style="margin-bottom: 3em; margin-top: 20px">
         <a th:href="@{/moto/novo}" class="btn-primary">+ Nova moto</a>
-    </div>
 
+
+        <a th:href="@{/calcular}" class="btn-secondary">Localizar moto <img th:src="@{/images/lupa.png}" alt="🔍"></a>
+    </div>
 
         <table class="table" >
             <thead>
@@ -36,7 +38,15 @@
                 <td th:text="${motoPatio.moto.placa}"></td>
                 <td th:text="${motoPatio.patio.logradouro}"></td>
                 <td th:text="${#temporals.format(motoPatio.dataHoraEntrada, 'dd/MM/yyyy HH:mm')}"></td>
-                <td th:text="${motoPatio.dataHoraSaida != null ? #temporals.format(motoPatio.dataHoraSaida, 'dd/MM/yyyy HH:mm') : '-'}"></td>
+                <td>
+                    <span th:if="${motoPatio.dataHoraSaida != null}"
+                          th:text="${#temporals.format(motoPatio.dataHoraSaida, 'dd/MM/yyyy HH:mm')}"></span>
+                    <form th:if="${motoPatio.dataHoraSaida == null}"
+                          th:action="@{'/moto/' + ${motoPatio.moto.id_moto} + '/saida'}"
+                          method="post" style="display:inline;">
+                        <button type="submit" class="btn-primary">Registrar Saída</button>
+                    </form>
+                </td>
                 <td class="actions">
                     <a th:href="@{'/moto/' + ${motoPatio.moto.id_moto} + '/editar'}" class="btn-outline">Editar</a>
                     <form th:action="@{'/moto/' + ${motoPatio.moto.id_moto} + '/excluir'}" method="post"

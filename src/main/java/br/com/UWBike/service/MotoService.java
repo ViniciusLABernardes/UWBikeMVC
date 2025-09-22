@@ -2,17 +2,15 @@ package br.com.UWBike.service;
 
 
 import br.com.UWBike.exceptions.IdNaoEncontradoException;
-import br.com.UWBike.model.Funcionario;
+
 import br.com.UWBike.model.Moto;
 
-import br.com.UWBike.model.MotoPatio;
-import br.com.UWBike.model.Patio;
 import br.com.UWBike.repository.FuncionarioRepository;
-import br.com.UWBike.repository.MotoPatioRepository;
+
 import br.com.UWBike.repository.MotoRepository;
 
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.annotation.Propagation;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

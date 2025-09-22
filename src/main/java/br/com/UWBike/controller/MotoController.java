@@ -4,6 +4,7 @@ package br.com.UWBike.controller;
 import br.com.UWBike.exceptions.IdNaoEncontradoException;
 import br.com.UWBike.model.Funcionario;
 import br.com.UWBike.model.Moto;
+import br.com.UWBike.model.MotoPatio;
 import br.com.UWBike.model.Patio;
 import br.com.UWBike.service.FuncionarioService;
 import br.com.UWBike.service.MotoPatioService;
@@ -79,5 +80,15 @@ public class MotoController{
             return "redirect:/index";
         }
 
+    @PostMapping("/{id}/saida")
+    public String registrarSaidaMoto(@PathVariable Long id, Model model) {
+        try {
+            MotoPatio motoPatio = motoPatioService.adicionarSaidaMoto(id);
+            model.addAttribute("sucesso", "Saída registrada com sucesso para a moto ID " + id);
+        } catch (IdNaoEncontradoException e) {
+            model.addAttribute("erro", e.getMessage());
+        }
+        return "redirect:/index";
+    }
 
 }
