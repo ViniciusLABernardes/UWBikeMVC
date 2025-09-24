@@ -11,6 +11,7 @@ import java.util.List;
 @Getter
 @Builder
 @Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @SequenceGenerator(name = "SQ_FUNCIONARIO", sequenceName = "tb_funcionario_seq", allocationSize = 1)
