@@ -14,8 +14,7 @@ public class UwBikeApplication {
 		SpringApplication.run(UwBikeApplication.class, args);
 	}
 
-	// Depois de rodar pela primeira vez o projeto, descomente o bloco abaixo e execute o projeto novamente,
-	// após isso pode comentar novamente
+
 
 		@Bean
 		public CommandLineRunner runner(FuncionarioService funcionarioService) {
