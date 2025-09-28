@@ -29,7 +29,7 @@ Desenvolver uma aplicação que:
     url: jdbc:oracle:thin:@//oracle.fiap.com.br:1521/ORCL
     username: seu login
 
-### 3 - Teste as funcionalidaes pelo navegador assim como foram feitas nos prints demonstrativos
+### 3 - Teste as funcionalidaes pelo navegador assim como foram feitas nos prints demonstrativos (OBS **** As vezes a tela de cadastro/edição de alguma parte pode não carregar direito, caso ocorra é necessario a reinicialização da aplicação)
 
 ## Prints demonstrativos:
 
