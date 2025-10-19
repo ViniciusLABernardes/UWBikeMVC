@@ -8,9 +8,9 @@ spring:
   application:
     name: UWBike
   datasource:
-    password: rita2362
+    password: ${DB_PASS:rita2362}
     url: jdbc:oracle:thin:@//oracle.fiap.com.br:1521/ORCL
-    username: RM554728
+    username: ${DB_USER:RM554728}
     driver-class-name: oracle.jdbc.OracleDriver
   jpa:
 
