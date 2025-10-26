@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Somatória de Salários</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="funcBody">
+
+<div th:replace="fragments/header :: headerFragment"></div>
+
+<section class="card">
+
+    <div th:if="${mensagem}" class="info" th:text="${mensagem}"></div>
+
+    <div th:if="${resultado}">
+        <h3>Resultado:</h3>
+        <pre class="card" style="background-color: #1e1e1e; color: #67b819; white-space: pre-wrap;"
+             th:text="${resultado}"></pre>
+    </div>
+</section>
+
+<div th:replace="fragments/footer :: footerFragment"></div>
+</body>
+</html>

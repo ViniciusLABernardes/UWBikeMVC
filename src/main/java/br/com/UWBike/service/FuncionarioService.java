@@ -15,10 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.sql.DataSource;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -163,5 +160,12 @@ public class FuncionarioService {
     public List<Patio> listarFuncionariosPorPatio() {
         return patioRepository.findAll();
     }
-    
+
+    public String conferirERealocarPatioFuncionario(Long id, Long idPatio)throws IdNaoEncontradoException{
+      return funcionarioRepository.confere_funcionario_patio(id,idPatio);
+
+    }
+    public String calcularSomatoriaSalarios() {
+        return funcionarioRepository.calcularSomatoriaSalarios();
+    }
 }

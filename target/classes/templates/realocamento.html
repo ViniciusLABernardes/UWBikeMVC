@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Realocar Funcionário</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body class="funcBody">
+
+<div th:replace="fragments/header :: headerFragment"></div>
+
+<section class="card">
+    <form class="form" th:action="@{/funcionario/realocamento}" method="post">
+
+        <div class="field">
+            <label for="idFuncionario">ID do Funcionário:</label>
+            <input type="number" id="idFuncionario" name="idFuncionario" class="login-input" required>
+        </div>
+
+        <div class="field">
+            <label for="idPatio">ID do Novo Pátio:</label>
+            <input type="number" id="idPatio" name="idPatio" class="login-input" required>
+        </div>
+
+        <button type="submit" class="login-button">Realocar</button>
+    </form>
+
+    <div th:if="${mensagem}" class="info" th:text="${mensagem}"></div>
+
+    <div th:if="${jsonResultado}">
+        <h3>Resultado (JSON):</h3>
+        <pre class="card" style="background-color: #1e1e1e; color: #67b819; white-space: pre-wrap;"
+             th:text="${jsonResultado}"></pre>
+        <button id="downloadJsonBtn" class="login-button">Baixar JSON</button>
+    </div>
+</section>
+<div th:replace="fragments/footer :: footerFragment"></div>
+
+<script th:if="${jsonResultado}" th:inline="javascript">
+    document.getElementById('downloadJsonBtn').addEventListener('click', function() {
+        const jsonStr = /*[[${jsonResultado}]]*/ '[]';
+        const blob = new Blob([jsonStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'resultado.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    });
+</script>
+</body>
+</html>

@@ -4,11 +4,14 @@ import br.com.UWBike.dto.FuncionarioRequestDto;
 import br.com.UWBike.exceptions.IdNaoEncontradoException;
 import br.com.UWBike.model.Funcionario;
 import br.com.UWBike.model.Patio;
+import br.com.UWBike.repository.PatioRepository;
 import br.com.UWBike.service.FuncionarioService;
+import br.com.UWBike.service.PatioService;
 import org.springframework.ui.Model;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,6 +22,10 @@ public class FuncionarioController {
 
     @Autowired
     private FuncionarioService funcionarioService;
+    @Autowired
+    private PatioRepository patioRepository;
+    @Autowired
+    private PatioService patioService;
 
     @GetMapping("/cadastrar")
     public String exibirFormCadastro(Model model) {
@@ -77,6 +84,49 @@ public class FuncionarioController {
         return "funcionarios";
     }
 
+    @GetMapping("/realocamento")
+    public String mostrarFormularioRealocamento(Model model) {
+        model.addAttribute("jsonResultado", null);
+        model.addAttribute("mensagem", null);
+        return "realocamento";
+    }
 
+
+    @PostMapping("/realocamento")
+    public String processarRealocamento(
+            @RequestParam("idFuncionario") Long idFuncionario,
+            @RequestParam("idPatio") Long idPatio,
+            Model model) {
+
+        try {
+
+            String json = funcionarioService.conferirERealocarPatioFuncionario(idFuncionario, idPatio);
+
+            model.addAttribute("mensagem", "Funcionário realocado com sucesso!");
+            model.addAttribute("jsonResultado", json);
+
+        } catch (IdNaoEncontradoException e) {
+            model.addAttribute("mensagem", "Erro: " + e.getMessage());
+            model.addAttribute("jsonResultado", null);
+        } catch (Exception e) {
+            model.addAttribute("mensagem", "Ocorreu um erro ao realocar o funcionário.");
+            model.addAttribute("jsonResultado", null);
+        }
+
+        return "realocamento";
+    }
+
+    @GetMapping("/somatoria-salarios")
+    public String calcularSomatoria(Model model) {
+        try {
+            String resultado = funcionarioService.calcularSomatoriaSalarios();
+            model.addAttribute("mensagem", "Cálculo executado com sucesso!");
+            model.addAttribute("resultado", resultado);
+        } catch (Exception e) {
+            model.addAttribute("mensagem", "Erro ao executar cálculo de salários.");
+            model.addAttribute("resultado", null);
+        }
+        return "somatoria-salarios";
+    }
 
 }
