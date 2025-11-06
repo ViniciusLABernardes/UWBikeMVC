@@ -84,6 +84,6 @@ Desenvolver uma aplicação que:
 
 ## Spring initialzr
 <img width="1919" height="1029" alt="springintialzr" src="https://github.com/user-attachments/assets/9b427bb1-a9dd-4ba0-9a9b-ecf204063f4b" />
-
-## Link do vídeo testando a aplicação: https://www.youtube.com/watch?v=mCLuy959NT0
-## Link do vídeo explicando um pouco do código: https://www.youtube.com/watch?v=vo07CF_ZXHM
+## Link do vídeo final(sprint 4): https://www.youtube.com/watch?v=jf8oRKLwMq0
+## Link do vídeo testando a aplicação(sprint 3): https://www.youtube.com/watch?v=mCLuy959NT0
+## Link do vídeo explicando um pouco do código(sprint 3): https://www.youtube.com/watch?v=vo07CF_ZXHM
