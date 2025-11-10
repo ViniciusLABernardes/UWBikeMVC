@@ -15,7 +15,6 @@ public class UwBikeApplication {
 	}
 
 
-
 		@Bean
 		public CommandLineRunner runner(FuncionarioService funcionarioService) {
 			return args -> {
