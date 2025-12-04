@@ -42,8 +42,9 @@ Desenvolver uma aplicação que:
 <img width="1919" height="1079" alt="home" src="https://github.com/user-attachments/assets/3b008998-0d25-49f7-b475-5c2de1ff1c96" />
 
 ### 3 - Localizar moto
-- coloque o id da moto desejada, o id do pátio que se encontra, mais 3 valores simulando distâncias entre a moto e os 3 esp32
-<img width="1919" height="1079" alt="localizar-moto" src="https://github.com/user-attachments/assets/5ffaaf90-283b-44e6-a7ac-f8b229f11508" />
+- coloque o id da moto desejada e o id do pátio que se encontra.
+<img width="1918" height="920" alt="Captura de tela 2025-12-04 203706" src="https://github.com/user-attachments/assets/f36c01fd-3ece-4967-88b2-04b2491ca45a" />
+
 
 ### 4 - Adicionar moto
 <img width="1919" height="1079" alt="cadastrar-moto" src="https://github.com/user-attachments/assets/a76defa2-bc2e-4487-a6ec-e2c706e60814" />
