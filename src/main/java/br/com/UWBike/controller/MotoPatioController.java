@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
+import java.util.random.RandomGenerator;
+
 @Controller
 @RequestMapping("")
 public class MotoPatioController {
@@ -66,12 +69,17 @@ public class MotoPatioController {
     public String calcularPosicao(
             @RequestParam("motoId") long motoId,
             @RequestParam("patioId") long patioId,
-            @RequestParam("d1") double d1,
-            @RequestParam("d2") double d2,
-            @RequestParam("d3") double d3,
+
             Model model) {
 
         try {
+
+
+            double d1 = Math.random() * 20;
+            double d2 = Math.random() * 20;
+            double d3 = Math.random() * 20;
+            System.out.println(d1 + " "+d2 +" "+ d3);
+
             Moto moto = motoPatioService.calcularPosicaoMoto(motoId, patioId, d1, d2, d3);
             model.addAttribute("resultado", moto);
         } catch (Exception e) {
@@ -80,9 +88,7 @@ public class MotoPatioController {
 
         model.addAttribute("motoId", motoId);
         model.addAttribute("patioId", patioId);
-        model.addAttribute("d1", d1);
-        model.addAttribute("d2", d2);
-        model.addAttribute("d3", d3);
+
 
         return "achar-moto";
     }

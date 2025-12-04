@@ -4,6 +4,47 @@
     <meta charset="UTF-8">
     <title>Trilateração da Moto</title>
     <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <style>
+        :root {
+            --map-w: 350px;
+            --map-h: 175px;
+        }
+        #minimap {
+            width: var(--map-w);
+            height: var(--map-h);
+            background: #eaeaea;
+            border: 2px solid #777;
+            position: relative;
+            border-radius: 6px;
+            margin: 10px auto;
+        }
+        .ancora-dot, .moto-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            position: absolute;
+            transform: translate(-50%, -50%);
+        }
+        .ancora-dot { background: blue; }
+        .moto-dot { background: red; }
+        .ancora-label {
+            font-size: 12px;
+            position: absolute;
+            transform: translate(-50%, -120%);
+        }
+        #alerta-fora {
+            display: none;
+            margin-top: 10px;
+            padding: 10px 15px;
+            background: #ffcccc;
+            color: #a10000;
+            font-weight: bold;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #a10000;
+        }
+    </style>
+
 </head>
 <body>
 <div th:replace="fragments/header :: headerFragment"></div>
@@ -25,37 +66,84 @@
                 <input type="text" id="patioId" name="patioId" th:value="${patioId}" required>
             </div>
 
-            <div class="field">
-                <label for="d1">Distância para Ancora 1 (d1)</label>
-                <input type="text" step="0.01" id="d1" name="d1" th:value="${d1}" required>
-            </div>
-
-            <div class="field">
-                <label for="d2">Distância para Ancora 2 (d2)</label>
-                <input type="text" step="0.01" id="d2" name="d2" th:value="${d2}" required>
-            </div>
-
-            <div class="field">
-                <label for="d3">Distância para Ancora 3 (d3)</label>
-                <input type="text" step="0.01" id="d3" name="d3" th:value="${d3}" required>
-            </div>
 
             <div class="actions">
                 <button type="submit" class="btn-primary">Calcular</button>
             </div>
         </form>
 
-        <div th:if="${resultado != null}" style="margin-top: 20px;">
-            <h3>Resultado:</h3>
-            <p>X: <span th:text="${resultado.posicaoX}"></span></p>
-            <p>Y: <span th:text="${resultado.posicaoY}"></span></p>
+        <div th:if="${resultado != null}">
+            <h3>Mini-mapa do Pátio</h3>
+
+            <div id="minimap"></div>
+
+            <p style="margin-top: 10px;">
+                X: <span id="posX" th:text="${resultado.posicaoX}"></span> m<br>
+                Y: <span id="posY" th:text="${resultado.posicaoY}"></span> m
+            </p>
+
+            <div id="alerta-fora">⚠️ Moto está fora do pátio!</div>
         </div>
+
 
         <div th:if="${erro != null}" style="margin-top: 20px; color: red;">
             <p th:text="${erro}"></p>
         </div>
     </div>
 </main>
+
+<script th:inline="javascript">
+    const resultadoExiste = [[${resultado != null}]];
+
+    if (resultadoExiste) {
+        const patioWidthM = 20;
+        const patioHeightM = 10;
+
+        const minimap = document.getElementById('minimap');
+
+        const posX = Number(document.getElementById("posX").textContent);
+        const posY = Number(document.getElementById("posY").textContent);
+
+        function toPercentX(xm) { return (xm / patioWidthM) * 100; }
+        function toPercentY(ym) { return (ym / patioHeightM) * 100; }
+
+        const ancoras = {
+            ancora1: { x: 1, y: 1 },
+            ancora2: { x: 19, y: 1 },
+            ancora3: { x: 10, y: 9 },
+        };
+
+        for (const [id, c] of Object.entries(ancoras)) {
+            const dot = document.createElement('div');
+            dot.className = 'ancora-dot';
+            dot.style.left = toPercentX(c.x) + '%';
+            dot.style.top  = (100 - toPercentY(c.y)) + '%';
+            minimap.appendChild(dot);
+
+            const label = document.createElement('div');
+            label.className = 'ancora-label';
+            label.textContent = id.toUpperCase();
+            label.style.left = dot.style.left;
+            label.style.top  = dot.style.top;
+            minimap.appendChild(label);
+        }
+
+        const alerta = document.getElementById("alerta-fora");
+        const foraArea = posX < 0 || posX > patioWidthM || posY < 0 || posY > patioHeightM;
+
+        if (foraArea) {
+            alerta.style.display = "block";
+        } else {
+            alerta.style.display = "none";
+            const motoDot = document.createElement('div');
+            motoDot.className = 'moto-dot';
+            motoDot.style.left = toPercentX(posX) + '%';
+            motoDot.style.top  = (100 - toPercentY(posY)) + '%';
+            minimap.appendChild(motoDot);
+        }
+    }
+</script>
+
 
 <div th:replace="fragments/footer :: footerFragment"></div>
 </body>

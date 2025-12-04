@@ -42,7 +42,7 @@ class FuncionarioServiceTest {
         // Arrange
         FuncionarioRequestDto dto = new FuncionarioRequestDto();
         dto.setNomeFunc("Vinicius");
-        dto.setCpf("12345678900");
+        dto.setCpf("12348596584");
         dto.setSalario(5000.0);
         dto.setCargo("Auxiliar de pátio");
         dto.setIdPatio(1L);
